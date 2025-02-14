@@ -40,17 +40,24 @@ public class PlayerMovement : MonoBehaviour
  
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
- 
+        if (InventorySystem.Instance.isOpen == true)
+        {
+            x = 0;
+            z = 0;
+        }
         //right is the red Axis, foward is the blue axis
         Vector3 move = transform.right * x + transform.forward * z;
  
         controller.Move(move * walkSpeed * Time.deltaTime);
  
-        //check if the player is on the ground so he can jump
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if(InventorySystem.Instance.isOpen == false)
         {
-            //the equation for jumping
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            //check if the player is on the ground so he can jump
+            if (Input.GetButtonDown("Jump") && isGrounded)
+            {
+                //the equation for jumping
+                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            }
         }
 
         //make player sprint when holding shift

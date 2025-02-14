@@ -14,6 +14,13 @@ public class PickUpScript : MonoBehaviour
     private bool canDrop = true; //this is needed so we don't throw/drop object when rotating the object
     private int LayerNumber; //layer index
 
+    public string ItemName;
+
+    public string GetItemName()
+    {
+        return ItemName;
+    }
+
     //Reference to script which includes mouse movement of player (looking around)
     //we want to disable the player looking around when rotating the object
     //example below 
@@ -59,6 +66,22 @@ public class PickUpScript : MonoBehaviour
                 StopClipping();
                 ThrowObject();
             }
+            
+            if (Input.GetKeyDown(KeyCode.N))
+            {
+                //check if inventory is full
+                if(!InventorySystem.Instance.CheckIfFull)
+                {
+                    InventorySystem.Instance.AddToInventory(ItemName);
+                    Destroy(heldObj);
+                    heldObj = null;
+                }
+                else
+                {
+                    Debug.Log("Inventory is full");
+                }
+            }
+            
 
         }
     }
