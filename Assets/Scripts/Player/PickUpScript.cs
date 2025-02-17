@@ -13,6 +13,7 @@ public class PickUpScript : MonoBehaviour
     private Rigidbody heldObjRb; //rigidbody of object we pick up
     private bool canDrop = true; //this is needed so we don't throw/drop object when rotating the object
     private int LayerNumber; //layer index
+    public bool holding;
 
     public string ItemName;
 
@@ -28,6 +29,11 @@ public class PickUpScript : MonoBehaviour
     void Start()
     {
         LayerNumber = LayerMask.NameToLayer("holdLayer"); //if your holdLayer is named differently make sure to change this ""
+        if (string.IsNullOrEmpty(ItemName))
+        {
+            ItemName = gameObject.name;
+            Debug.Log("ItemName was empty, setting it to " + ItemName);
+        }
 
         //mouseLookScript = player.GetComponent<MouseLookScript>();
     }
@@ -37,6 +43,7 @@ public class PickUpScript : MonoBehaviour
         {
             if (heldObj == null) //if currently not holding anything
             {
+                holding = true;
                 //perform raycast to check if player is looking at object within pickuprange
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, pickUpRange))
@@ -51,10 +58,41 @@ public class PickUpScript : MonoBehaviour
             }
             else
             {
+                holding = false;
                 if(canDrop == true)
                 {
                     StopClipping(); //prevents object from clipping through walls
                     DropObject();
+                }
+            }
+        }
+        
+        if (Input.GetKeyDown(KeyCode.N) && heldObj != null) //check if player is holding the item
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, pickUpRange))
+            {
+                // Check if the object has PickUpScript before trying to get ItemName
+                PickUpScript itemScript = hit.transform.gameObject.GetComponent<PickUpScript>();
+
+                if (itemScript != null) // ✅ This ensures we're only picking up valid items
+                {
+                    if (InventorySystem.Instance.isFull)
+                    {
+                        Debug.Log("Inventory is full");
+                    }
+                    else
+                    {
+                        string pickedItemName = itemScript.ItemName; // Get the correct ItemName
+                        Debug.Log("Trying to add item: " + pickedItemName);
+
+                        InventorySystem.Instance.AddToInventory(pickedItemName);
+                        Destroy(hit.transform.gameObject); // Destroy the picked-up object
+                    }
+                }
+                else
+                {
+                    Debug.LogError("❌ Picked object has no PickUpScript attached! Object name: " + hit.transform.gameObject.name);
                 }
             }
         }
@@ -67,20 +105,7 @@ public class PickUpScript : MonoBehaviour
                 ThrowObject();
             }
             
-            if (Input.GetKeyDown(KeyCode.N))
-            {
-                //check if inventory is full
-                if(!InventorySystem.Instance.CheckIfFull)
-                {
-                    InventorySystem.Instance.AddToInventory(ItemName);
-                    Destroy(heldObj);
-                    heldObj = null;
-                }
-                else
-                {
-                    Debug.Log("Inventory is full");
-                }
-            }
+            
             
 
         }

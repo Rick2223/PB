@@ -20,6 +20,8 @@ public class InventorySystem : MonoBehaviour
 
     public bool isOpen;
 
+    public bool isFull;
+
  
  
     private void Awake()
@@ -38,6 +40,7 @@ public class InventorySystem : MonoBehaviour
     void Start()
     {
         isOpen = false;
+        isFull = false;
 
         PopulateSlotLost();
     }
@@ -79,10 +82,16 @@ public class InventorySystem : MonoBehaviour
     {
        
         whatSlotToEquip = FindNextEmptySlot();
-        itemToAdd = Instantiate(Resources.Load<GameObject>(itemName), whatSlotToEquip.transform.position, whatSlotToEquip.transform.rotation);
-        itemToAdd.transform.SetParent(whatSlotToEquip.transform);
+        GameObject loadedItem = Resources.Load<GameObject>(itemName);
+        if (loadedItem == null)
+        {
+            Debug.LogError("❌ Error: Could not find item prefab in Resources folder: " + itemName);
+            return;
+        }
 
-        itemList.Add(itemName);
+        itemToAdd = Instantiate(loadedItem, whatSlotToEquip.transform);
+        itemToAdd.name = itemName; // Set the name correctly
+        itemToAdd.transform.SetParent(whatSlotToEquip.transform);
 
         Debug.Log(itemToAdd);
         if (itemToAdd != null)
@@ -110,6 +119,7 @@ public class InventorySystem : MonoBehaviour
             {
                 return slot;
             }
+
         }
         return null;
     }
@@ -129,10 +139,12 @@ public class InventorySystem : MonoBehaviour
         if (counter == slotList.Count)
         {
             return true;
+            isFull = true;
         }
         else
         {
             return false;
+            isFull = false;
         }
     }
     
