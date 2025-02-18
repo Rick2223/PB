@@ -8,7 +8,9 @@ using TMPro;
 public class SelectionManager : MonoBehaviour
 {
  
+    public static SelectionManager Instance { get; set; }
     public GameObject interaction_Info_UI;
+    public GameObject Crosshair;
     TextMeshProUGUI interaction_text;
  
     private void Start()
@@ -48,4 +50,6 @@ public class SelectionManager : MonoBehaviour
             interaction_Info_UI.SetActive(false);
         }
     }
+
+    
 }
