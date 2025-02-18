@@ -92,21 +92,9 @@ public class InventorySystem : MonoBehaviour
         itemToAdd = Instantiate(loadedItem, whatSlotToEquip.transform);
         itemToAdd.name = itemName; // Set the name correctly
         itemToAdd.transform.SetParent(whatSlotToEquip.transform);
+        itemList.Add(itemToAdd.name);
 
         Debug.Log(itemToAdd);
-        if (itemToAdd != null)
-        {
-            foreach (GameObject slot in slotList)
-            {
-                if (slot.transform.childCount == 0)
-                {
-                    GameObject item = Instantiate(itemToAdd, slot.transform);
-                    item.name = itemToAdd.name;
-                    itemList.Add(itemToAdd.name);
-                    break;
-                }
-            }
-        }
         
         
     }
