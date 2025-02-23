@@ -19,6 +19,8 @@ public class EquipSystem : MonoBehaviour
 
     public int selectedNumber = -1;
     public GameObject selectedItem;
+    public GameObject holdPosition;
+    public GameObject selecteditemModel;
 
    
     private void Awake()
@@ -71,6 +73,8 @@ public class EquipSystem : MonoBehaviour
                 
                 selectedItem = GetSelectedItem(number);
                 selectedItem.GetComponent<InventoryItem>().isSelected = true;
+
+                SetEquippedModel(selectedItem);
                 
                 //Changing color of slotnumbers
                 foreach (Transform child in numbersHolder.transform)
@@ -89,6 +93,13 @@ public class EquipSystem : MonoBehaviour
                     selectedItem.gameObject.GetComponent<InventoryItem>().isSelected = false;
                     selectedItem = null;
                 }
+
+                if(selecteditemModel != null)
+                {
+                    DestroyImmediate(selecteditemModel.gameObject);
+                    selecteditemModel = null;
+                }
+
                 //Changing color of slotnumbers
                 foreach (Transform child in numbersHolder.transform)
                 {
@@ -98,6 +109,68 @@ public class EquipSystem : MonoBehaviour
         }
     }
 
+    
+
+    private void SetEquippedModel(GameObject selectedItem)
+    {
+        if (selecteditemModel != null)
+        {
+            DestroyImmediate(selecteditemModel.gameObject);
+            selecteditemModel = null;
+        }
+        
+        string selectedItemName = selectedItem.name.Replace("(Clone)", "");
+        selecteditemModel = Instantiate(Resources.Load<GameObject>(selectedItemName + "_Model"), new Vector3(1f, 0f, 0), Quaternion.Euler(0, -12.5f, -20f));
+        selecteditemModel.transform.SetParent(holdPosition.transform, false);
+
+        // Ensure the item has the correct tag for re-picking after being dropped
+        selecteditemModel.tag = "canPickUp";
+
+        // Copy PickUpScript and its data
+        if (!selecteditemModel.GetComponent<PickUpScript>())
+        {
+            PickUpScript originalPickUpScript = selectedItem.GetComponent<PickUpScript>();
+            PickUpScript newPickUpScript = selecteditemModel.AddComponent<PickUpScript>();
+
+            // Copy relevant properties
+            newPickUpScript.ItemName = originalPickUpScript?.ItemName ?? selectedItemName;
+            newPickUpScript.player = originalPickUpScript?.player;
+            newPickUpScript.holdPos = originalPickUpScript?.holdPos;
+            newPickUpScript.throwForce = originalPickUpScript?.throwForce ?? 500f;
+            newPickUpScript.pickUpRange = originalPickUpScript?.pickUpRange ?? 3f;
+        }
+
+        // Ensure Rigidbody is present
+        if (!selecteditemModel.GetComponent<Rigidbody>())
+        {
+            Rigidbody rb = selecteditemModel.AddComponent<Rigidbody>();
+            rb.isKinematic = true; // so it doesn't fall through the world when equipped
+        }
+
+        // Ensure Collider is present
+        if (!selecteditemModel.GetComponent<Collider>())
+        {
+            Collider originalCollider = selectedItem.GetComponent<Collider>();
+            if (originalCollider != null)
+            {
+                Collider newCollider = selecteditemModel.AddComponent(originalCollider.GetType()) as Collider;
+                newCollider.isTrigger = originalCollider.isTrigger;
+            }
+        }
+
+        // Ensure InteractableObject script is copied over
+        if (selectedItem.GetComponent<InteractableObject>() && !selecteditemModel.GetComponent<InteractableObject>())
+        {
+            InteractableObject originalInteractableObject = selectedItem.GetComponent<InteractableObject>();
+            InteractableObject newInteractableObject = selecteditemModel.AddComponent<InteractableObject>();
+
+            // Copy any necessary properties from InteractableObject
+            // Adjust this to fit your InteractableObject fields!
+        }
+    }
+
+    
+    
     GameObject GetSelectedItem(int slotNumber)
     {
         return quickSlotsList[slotNumber - 1].transform.GetChild(0).gameObject;

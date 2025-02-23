@@ -67,35 +67,33 @@ public class PickUpScript : MonoBehaviour
             }
         }
         
-        if (Input.GetKeyDown(KeyCode.N) && heldObj != null) //check if player is holding the item
+        if (Input.GetKeyDown(KeyCode.N) && heldObj != null) // Check if player is holding the item
         {
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, pickUpRange))
+            // Get the PickUpScript directly from the held object
+            PickUpScript itemScript = heldObj.GetComponent<PickUpScript>();
+
+            if (itemScript != null) // Ensure the held item has a PickUpScript
             {
-                // Check if the object has PickUpScript before trying to get ItemName
-                PickUpScript itemScript = hit.transform.gameObject.GetComponent<PickUpScript>();
-
-                if (itemScript != null) // ✅ This ensures we're only picking up valid items
+                if (InventorySystem.Instance.isFull)
                 {
-                    if (InventorySystem.Instance.isFull)
-                    {
-                        Debug.Log("Inventory is full");
-                    }
-                    else
-                    {
-                        string pickedItemName = itemScript.ItemName; // Get the correct ItemName
-                        Debug.Log("Trying to add item: " + pickedItemName);
-
-                        InventorySystem.Instance.AddToInventory(pickedItemName);
-                        Destroy(hit.transform.gameObject); // Destroy the picked-up object
-                    }
+                    Debug.Log("Inventory is full");
                 }
                 else
                 {
-                    Debug.LogError("❌ Picked object has no PickUpScript attached! Object name: " + hit.transform.gameObject.name);
+                    string pickedItemName = itemScript.ItemName; // Get the item name
+                    Debug.Log("Adding item to inventory: " + pickedItemName);
+
+                    InventorySystem.Instance.AddToInventory(pickedItemName);
+                    Destroy(heldObj); // Remove the item from the world
+                    heldObj = null; // Clear the held object since it's picked up
                 }
             }
+            else
+            {
+                Debug.LogError("Held object has no PickUpScript attached! Object name: " + heldObj.name);
+            }
         }
+
         if (heldObj != null) //if player is holding object
         {
             MoveObject(); //keep object position at holdPos
