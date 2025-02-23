@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 307200035792355624}
   - component: {fileID: 1555829511888137155}
   - component: {fileID: 3770374340505122207}
+  - component: {fileID: -3866128130174834502}
   m_Layer: 5
   m_Name: Cube
   m_TagString: Untagged
@@ -101,3 +102,21 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &-3866128130174834502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4289967677395767063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41cd81ef0af89d343ae411537ef4d6f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisName: Cube
+  thisDescription: A squared box
+  thisFunctionality: Can do nothing
+  isEquippable: 1
+  isInsideQuickSlot: 0
+  isSelected: 0

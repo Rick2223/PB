@@ -2,10 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;	
  
 public class InventorySystem : MonoBehaviour
 {
  
+   
+   public GameObject ItemInfoUI;
    public static InventorySystem Instance { get; set; }
  
     public GameObject inventoryScreenUI;
@@ -136,6 +140,21 @@ public class InventorySystem : MonoBehaviour
         {
             return false;
             isFull = false;
+        }
+    }
+
+    public void ReCalculateList()
+    {
+        itemList.Clear();
+        foreach (GameObject slot in slotList)
+        {
+            if (slot.transform.childCount > 0)
+            {
+                string name = slot.transform.GetChild(0).name;
+                string str2 = "(Clone)";
+                string result = name.Replace(str2, "");
+                itemList.Add(result);
+            }
         }
     }
     
