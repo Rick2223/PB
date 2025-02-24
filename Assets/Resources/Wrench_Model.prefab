@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: e05444ca8bfb67644bae6c77018dcf00, type: 2}
     - target: {fileID: 1449774235362854308, guid: 136983c1b7f707742a63d5470a6e7613, type: 3}
       propertyPath: m_Name
-      value: Wrench Variant
+      value: Wrench_Model
       objectReference: {fileID: 0}
     - target: {fileID: 2257835379927375646, guid: 136983c1b7f707742a63d5470a6e7613, type: 3}
       propertyPath: m_RootOrder
@@ -75,5 +75,105 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1449774235362854308, guid: 136983c1b7f707742a63d5470a6e7613, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -30068083895858353}
+    - targetCorrespondingSourceObject: {fileID: 1449774235362854308, guid: 136983c1b7f707742a63d5470a6e7613, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2747481764331623469}
+    - targetCorrespondingSourceObject: {fileID: 1449774235362854308, guid: 136983c1b7f707742a63d5470a6e7613, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -8122718763230539330}
+    - targetCorrespondingSourceObject: {fileID: 1449774235362854308, guid: 136983c1b7f707742a63d5470a6e7613, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6085053762385750120}
   m_SourcePrefab: {fileID: 100100000, guid: 136983c1b7f707742a63d5470a6e7613, type: 3}
+--- !u!1 &3695155604992678251 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1449774235362854308, guid: 136983c1b7f707742a63d5470a6e7613, type: 3}
+  m_PrefabInstance: {fileID: 2835426691913931983}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &-30068083895858353
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3695155604992678251}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &2747481764331623469
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3695155604992678251}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &-8122718763230539330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3695155604992678251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f36090c05ce569542a9d235812207b1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ItemName: Wrench
+--- !u!114 &6085053762385750120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3695155604992678251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f3f80fb14658d44baa06265ba3149ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  holdPos: {fileID: 0}
+  throwForce: 500
+  pickUpRange: 3
+  heldObj: {fileID: 0}
+  heldObjRb: {fileID: 0}
+  holding: 0
+  ItemName: Wrench

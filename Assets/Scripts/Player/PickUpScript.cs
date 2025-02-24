@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class PickUpScript : MonoBehaviour
 {
@@ -9,12 +11,11 @@ public class PickUpScript : MonoBehaviour
     //if you copy from below this point, you are legally required to like the video
     public float throwForce = 500f; //force at which the object is thrown at
     public float pickUpRange = 3f; //how far the player can pickup the object from
-    private GameObject heldObj; //object which we pick up
-    private Rigidbody heldObjRb; //rigidbody of object we pick up
+    public GameObject heldObj; //object which we pick up
+    public Rigidbody heldObjRb; //rigidbody of object we pick up
     private bool canDrop = true; //this is needed so we don't throw/drop object when rotating the object
     private int LayerNumber; //layer index
     public bool holding;
-
     public string ItemName;
 
     public string GetItemName()
@@ -96,15 +97,14 @@ public class PickUpScript : MonoBehaviour
 
         if (heldObj != null) //if player is holding object
         {
+           
             MoveObject(); //keep object position at holdPos
             if (Input.GetKeyDown(KeyCode.Mouse0) && canDrop == true) //Mous0 (leftclick) is used to throw, change this if you want another button to be used)
             {
                 StopClipping();
                 ThrowObject();
             }
-            
-            
-            
+  
 
         }
     }
@@ -123,13 +123,54 @@ public class PickUpScript : MonoBehaviour
     }
     void DropObject()
     {
-        //re-enable collision with player
-        Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), false);
-        heldObj.layer = 0; //object assigned back to default layer
-        heldObjRb.isKinematic = false;
-        heldObj.transform.parent = null; //unparent object
-        heldObj = null; //undefine game object
+        if (heldObj == null)
+        {
+            Debug.LogError("❌ DropObject called but heldObj is null.");
+            return;
+        }
+
+        // Ensure the item has the required components
+        InteractableObject interactable = heldObj.GetComponent<InteractableObject>();
+        if (interactable == null)
+        {
+            Debug.LogError("❌ Dropped item is missing InteractableObject component.");
+            return;
+        }
+
+        // Get item name to remove from inventory
+        string itemName = interactable.GetItemName();
+        if (string.IsNullOrEmpty(itemName))
+        {
+            Debug.LogError("❌ Item name is null or empty.");
+            return;
+        }
+
+        // Enable physics and unparent the object
+        Rigidbody rb = heldObj.GetComponent<Rigidbody>();
+        Collider col = heldObj.GetComponent<Collider>();
+
+        if (rb != null) rb.isKinematic = false;
+        if (col != null) col.enabled = true;
+
+        heldObj.transform.SetParent(null);
+        heldObj.transform.position = transform.position + transform.forward;
+
+        // Remove from Inventory
+        InventorySystem.Instance.RemoveFromInventory(itemName);
+        EquipSystem.Instance.RemoveFromQuickSlots(itemName); // Remove from quick slots if equipped
+        InventorySystem.Instance.ReCalculateList(); // Ensure the list stays synced
+
+        // Ensure it's pickable again
+        interactable.ItemName = itemName;
+        heldObj.tag = "canPickUp";
+
+        // Clear the held object reference
+        heldObj = null;
+
+        Debug.Log("✅ Dropped and removed item from inventory: " + itemName);
     }
+
+
     void MoveObject()
     {
         //keep object position the same as the holdPosition position
@@ -145,6 +186,7 @@ public class PickUpScript : MonoBehaviour
         heldObj.transform.parent = null;
         heldObjRb.AddForce(transform.forward * throwForce);
         heldObj = null;
+        holding = false;
     }
     void StopClipping() //function only called when dropping/throwing
     {

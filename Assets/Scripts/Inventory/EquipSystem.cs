@@ -13,6 +13,8 @@ public class EquipSystem : MonoBehaviour
     public GameObject quickSlotsPanel;
 
     public List<GameObject> quickSlotsList = new List<GameObject>();
+
+    public List<GameObject> quickSlotsItems = new List<GameObject>();
  	
 
     public GameObject numbersHolder;
@@ -118,36 +120,49 @@ public class EquipSystem : MonoBehaviour
             DestroyImmediate(selecteditemModel.gameObject);
             selecteditemModel = null;
         }
-        
+
         string selectedItemName = selectedItem.name.Replace("(Clone)", "");
-        selecteditemModel = Instantiate(Resources.Load<GameObject>(selectedItemName + "_Model"), new Vector3(1f, 0f, 0), Quaternion.Euler(0, -12.5f, -20f));
+        selecteditemModel = Instantiate(Resources.Load<GameObject>(selectedItemName + "_Model"), holdPosition.transform.position, Quaternion.Euler(0, -12.5f, -20f));
         selecteditemModel.transform.SetParent(holdPosition.transform, false);
 
-        // Ensure the item has the correct tag for re-picking after being dropped
         selecteditemModel.tag = "canPickUp";
 
-        // Copy PickUpScript and its data
-        if (!selecteditemModel.GetComponent<PickUpScript>())
+        // Copy PickUpScript data
+        PickUpScript newPickUpScript = selecteditemModel.GetComponent<PickUpScript>();
+        if (newPickUpScript == null)
         {
-            PickUpScript originalPickUpScript = selectedItem.GetComponent<PickUpScript>();
-            PickUpScript newPickUpScript = selecteditemModel.AddComponent<PickUpScript>();
-
-            // Copy relevant properties
-            newPickUpScript.ItemName = originalPickUpScript?.ItemName ?? selectedItemName;
-            newPickUpScript.player = originalPickUpScript?.player;
-            newPickUpScript.holdPos = originalPickUpScript?.holdPos;
-            newPickUpScript.throwForce = originalPickUpScript?.throwForce ?? 500f;
-            newPickUpScript.pickUpRange = originalPickUpScript?.pickUpRange ?? 3f;
+            newPickUpScript = selecteditemModel.AddComponent<PickUpScript>();
         }
 
-        // Ensure Rigidbody is present
-        if (!selecteditemModel.GetComponent<Rigidbody>())
+        PickUpScript originalPickUpScript = selectedItem.GetComponent<PickUpScript>();
+        if (originalPickUpScript != null)
         {
-            Rigidbody rb = selecteditemModel.AddComponent<Rigidbody>();
-            rb.isKinematic = true; // so it doesn't fall through the world when equipped
+            newPickUpScript.ItemName = originalPickUpScript.ItemName;
+            newPickUpScript.player = originalPickUpScript.player;
+            newPickUpScript.holdPos = originalPickUpScript.holdPos;
+            newPickUpScript.throwForce = originalPickUpScript.throwForce;
+            newPickUpScript.pickUpRange = originalPickUpScript.pickUpRange;
         }
 
-        // Ensure Collider is present
+        newPickUpScript.holding = true; // Make sure it's recognized as being held
+        newPickUpScript.enabled = true; // Ensure the script is active
+
+        // Assign it to the player's current held object
+        PickUpScript playerPickUpScript = holdPosition.GetComponentInParent<PickUpScript>();
+        if (playerPickUpScript != null)
+        {
+            playerPickUpScript.heldObj = selecteditemModel;
+            playerPickUpScript.holding = true;
+        }
+
+        // Ensure Rigidbody and Collider exist
+        Rigidbody rb = selecteditemModel.GetComponent<Rigidbody>();
+        if (rb == null)
+        {
+            rb = selecteditemModel.AddComponent<Rigidbody>();
+            rb.isKinematic = true; 
+        }
+
         if (!selecteditemModel.GetComponent<Collider>())
         {
             Collider originalCollider = selectedItem.GetComponent<Collider>();
@@ -157,17 +172,8 @@ public class EquipSystem : MonoBehaviour
                 newCollider.isTrigger = originalCollider.isTrigger;
             }
         }
-
-        // Ensure InteractableObject script is copied over
-        if (selectedItem.GetComponent<InteractableObject>() && !selecteditemModel.GetComponent<InteractableObject>())
-        {
-            InteractableObject originalInteractableObject = selectedItem.GetComponent<InteractableObject>();
-            InteractableObject newInteractableObject = selecteditemModel.AddComponent<InteractableObject>();
-
-            // Copy any necessary properties from InteractableObject
-            // Adjust this to fit your InteractableObject fields!
-        }
     }
+
 
     
     
@@ -209,6 +215,25 @@ public class EquipSystem : MonoBehaviour
         InventorySystem.Instance.ReCalculateList();
 
     }
+
+    public void RemoveFromQuickSlots(string itemName)
+    {
+        // Iterate through quick slots to remove the item
+        foreach (GameObject slot in quickSlotsList)
+        {
+            if (slot.transform.childCount > 0)
+            {
+                GameObject itemInSlot = slot.transform.GetChild(0).gameObject;
+                if (itemInSlot.name == itemName || itemInSlot.name == itemName + "(Clone)")
+                {
+                    Destroy(itemInSlot); // Remove item visually from the quick slot
+                    return;
+                }
+            }
+        }
+        Debug.LogWarning("❌ Tried to remove an item from quick slots that wasn't there: " + itemName);
+    }
+
 
 
     private GameObject FindNextEmptySlot()

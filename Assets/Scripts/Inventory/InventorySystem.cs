@@ -46,12 +46,12 @@ public class InventorySystem : MonoBehaviour
         isOpen = false;
         isFull = false;
 
-        PopulateSlotLost();
+        PopulateSlotList();
 
         Cursor.visible = false;
     }
 
-    private void PopulateSlotLost()
+    private void PopulateSlotList()
     {
         foreach (Transform child in inventoryScreenUI.transform)
         {
@@ -156,6 +156,27 @@ public class InventorySystem : MonoBehaviour
                 itemList.Add(result);
             }
         }
+    }
+
+    public void RemoveFromInventory(string itemName)
+    {
+        // Find the item slot containing the item to remove
+        foreach (GameObject slot in slotList)
+        {
+            if (slot.transform.childCount > 0)
+            {
+                GameObject itemInSlot = slot.transform.GetChild(0).gameObject;
+                if (itemInSlot.name == itemName || itemInSlot.name == itemName + "(Clone)")
+                {
+                    Destroy(itemInSlot); // Remove item visually from the slot
+                    itemList.Remove(itemName); // Remove from itemList
+                    ReCalculateList(); // Ensure the list stays synced
+                    Debug.Log(itemName + " removed from inventory.");
+                    return;
+                }
+            }
+        }
+        Debug.LogWarning("Tried to remove an item that wasn't in the inventory: " + itemName);
     }
     
  }
