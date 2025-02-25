@@ -88,6 +88,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1449774235362854308, guid: 136983c1b7f707742a63d5470a6e7613, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6085053762385750120}
+    - targetCorrespondingSourceObject: {fileID: 1449774235362854308, guid: 136983c1b7f707742a63d5470a6e7613, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6398165193215252037}
+    - targetCorrespondingSourceObject: {fileID: 1449774235362854308, guid: 136983c1b7f707742a63d5470a6e7613, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6932419972581570519}
   m_SourcePrefab: {fileID: 100100000, guid: 136983c1b7f707742a63d5470a6e7613, type: 3}
 --- !u!1 &3695155604992678251 stripped
 GameObject:
@@ -177,3 +183,36 @@ MonoBehaviour:
   heldObjRb: {fileID: 0}
   holding: 0
   ItemName: Wrench
+--- !u!95 &6398165193215252037
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3695155604992678251}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ec126a8f80db53d4ead5c7130912a5bd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6932419972581570519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3695155604992678251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c9e1809ff880b34690c2a6922fdf77c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
