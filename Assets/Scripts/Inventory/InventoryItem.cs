@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using TMPro;
 
 public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
@@ -19,9 +18,9 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     // --- Equipping --- //
     public bool isEquippable;
     private GameObject itemPendingEquipping;
-    public bool isInsideQuickSlot; //Item is in a quick slot
-    public bool isSelected; //Item is selected in a quick slot or is equipped
+    public bool isNowEquipped;
 
+    public bool isSelected;
 
 
     private void Start()
@@ -53,21 +52,22 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         itemInfoUI_itemFunctionality.text = thisFunctionality;
     }
 
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            if (isEquippable && isNowEquipped == false && EquipSystem.Instance.CheckIfFull() == false)
+            {
+                EquipSystem.Instance.AddToQuickSlots(gameObject);
+                isNowEquipped = true;
+            }
+        }   
+    }
+
     // Triggered when the mouse exits the area of the item that has this script.
     public void OnPointerExit(PointerEventData eventData)
     {
         itemInfoUI.SetActive(false);
     }
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            if (isEquippable && isInsideQuickSlot == false && EquipSystem.Instance.CheckIfFull() == false)
-            {
-                EquipSystem.Instance.AddToQuickSlots(gameObject);
-                isInsideQuickSlot = true;
-            }
-        }
-    }
 }

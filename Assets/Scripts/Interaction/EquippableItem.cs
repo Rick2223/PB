@@ -17,7 +17,7 @@ public class EquippableItem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) //Left Mouse Button
+        if (Input.GetMouseButtonDown(0) && InventorySystem.Instance.isOpen == false) //Left Mouse Button is clicked and inventory is closed
         {
             animator.SetTrigger("hit");
         }

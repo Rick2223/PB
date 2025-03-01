@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 307200035792355624}
   - component: {fileID: 1555829511888137155}
   - component: {fileID: 3770374340505122207}
-  - component: {fileID: -3866128130174834502}
+  - component: {fileID: -7175550882255141103}
   m_Layer: 5
   m_Name: Knife
   m_TagString: Untagged
@@ -102,7 +102,7 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &-3866128130174834502
+--- !u!114 &-7175550882255141103
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,6 +117,3 @@ MonoBehaviour:
   thisName: Knife
   thisDescription: A sharp knife
   thisFunctionality: Can be used to cut things
-  isEquippable: 1
-  isInsideQuickSlot: 0
-  isSelected: 0

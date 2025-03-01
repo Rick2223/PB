@@ -9,8 +9,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3868776988196264684, guid: 370573f8da2f67845ad9b5efc0b41a99, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3868776988196264684, guid: 370573f8da2f67845ad9b5efc0b41a99, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3988693601549738302, guid: 370573f8da2f67845ad9b5efc0b41a99, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3988693601549738302, guid: 370573f8da2f67845ad9b5efc0b41a99, type: 3}
       propertyPath: m_IsActive
@@ -61,12 +69,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6028101725501988701, guid: 370573f8da2f67845ad9b5efc0b41a99, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6028101725501988701, guid: 370573f8da2f67845ad9b5efc0b41a99, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6885043072945392160, guid: 370573f8da2f67845ad9b5efc0b41a99, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6885043072945392160, guid: 370573f8da2f67845ad9b5efc0b41a99, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6965244756193360172, guid: 370573f8da2f67845ad9b5efc0b41a99, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6965244756193360172, guid: 370573f8da2f67845ad9b5efc0b41a99, type: 3}
       propertyPath: m_IsActive
@@ -75,6 +95,14 @@ PrefabInstance:
     - target: {fileID: 7097826775940330933, guid: 370573f8da2f67845ad9b5efc0b41a99, type: 3}
       propertyPath: m_Name
       value: Knife_Model
+      objectReference: {fileID: 0}
+    - target: {fileID: 7097826775940330933, guid: 370573f8da2f67845ad9b5efc0b41a99, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8046742699496540204, guid: 370573f8da2f67845ad9b5efc0b41a99, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8046742699496540204, guid: 370573f8da2f67845ad9b5efc0b41a99, type: 3}
       propertyPath: m_IsActive
@@ -88,6 +116,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: e05444ca8bfb67644bae6c77018dcf00, type: 2}
+    - target: {fileID: 8415588107714547811, guid: 370573f8da2f67845ad9b5efc0b41a99, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -97,13 +129,10 @@ PrefabInstance:
       addedObject: {fileID: 971260373048384902}
     - targetCorrespondingSourceObject: {fileID: 7097826775940330933, guid: 370573f8da2f67845ad9b5efc0b41a99, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3534254602181043350}
+      addedObject: {fileID: 2027490113645556834}
     - targetCorrespondingSourceObject: {fileID: 7097826775940330933, guid: 370573f8da2f67845ad9b5efc0b41a99, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -4708083191058227336}
-    - targetCorrespondingSourceObject: {fileID: 7097826775940330933, guid: 370573f8da2f67845ad9b5efc0b41a99, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2051763413664824856}
+      addedObject: {fileID: 2589134947202231474}
   m_SourcePrefab: {fileID: 100100000, guid: 370573f8da2f67845ad9b5efc0b41a99, type: 3}
 --- !u!1 &1233310603274571246 stripped
 GameObject:
@@ -133,34 +162,28 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &3534254602181043350
-Rigidbody:
+--- !u!95 &2027490113645556834
+Animator:
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1233310603274571246}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &-4708083191058227336
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0cd24fd985fbbe345b31901206877c9f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2589134947202231474
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -169,27 +192,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1233310603274571246}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f36090c05ce569542a9d235812207b1d, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c9e1809ff880b34690c2a6922fdf77c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemName: Knife
---- !u!114 &2051763413664824856
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1233310603274571246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f3f80fb14658d44baa06265ba3149ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  holdPos: {fileID: 0}
-  throwForce: 500
-  pickUpRange: 3
-  heldObj: {fileID: 0}
-  heldObjRb: {fileID: 0}
-  holding: 0
-  ItemName: Knife
+  animator: {fileID: 0}
