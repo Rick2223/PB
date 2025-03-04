@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DoorController : MonoBehaviour
@@ -7,6 +9,7 @@ public class DoorController : MonoBehaviour
 
     [Header("Door Settings")]
     [SerializeField] private bool requiresKey = false; // Does this door need a key?
+    [SerializeField] private bool requiresCode = false; 
     [SerializeField] private string requiredKeyName = "CellKey"; // Key name
 
     [Header("Animation Settings")]
@@ -22,11 +25,21 @@ public class DoorController : MonoBehaviour
         }
     }
 
+    public void SetCodeFalse()
+    {
+        requiresCode = false;
+    }
+    
     public void ToggleDoor(string equippedItem)
     {
-        if (requiresKey && equippedItem != requiredKeyName)
+        if (requiresKey && EquipSystem.Instance.selectedItem.name != requiredKeyName)
         {
             Debug.Log(gameObject.name + " is locked. You need the " + requiredKeyName + ".");
+            return;
+        }
+        else if (requiresCode)
+        {
+            Debug.Log(gameObject.name + " is locked. You need a code.");
             return;
         }
 
