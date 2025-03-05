@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerState : MonoBehaviour
 {
     public static PlayerState Instance { get; set; }
+
+    public GameObject playerBody;
+
 
     private void Awake()
     {
@@ -19,15 +21,9 @@ public class PlayerState : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-
-    }
-    
+    // Update is called once per frame
     void Update()
     {
-
+        
     }
-
 }
-    

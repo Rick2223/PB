@@ -6,11 +6,11 @@ using UnityEngine;
 
 public class PlayerData
 {
-    public float[] PlayerPositionAndRotation;
+    public float[] playerPositionAndRotation;
     //public string[] inventoryContent;
 
     public PlayerData(float[] _playerPosAndRot)
     {
-        PlayerPositionAndRotation = _playerPosAndRot;
+        playerPositionAndRotation = _playerPosAndRot;
     }
 }
