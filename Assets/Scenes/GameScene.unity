@@ -28659,7 +28659,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &549589637
 RectTransform:
   m_ObjectHideFlags: 0
@@ -41670,7 +41670,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 0
       - m_Target: {fileID: 1684890470}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -41678,6 +41678,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 0
+      - m_Target: {fileID: 978945103}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -116798,17 +116810,13 @@ GameObject:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 705507995}
-  - {fileID: 1069872948}
-  - {fileID: 246733911}
-  - {fileID: 242381087}
-  - {fileID: 706297049}
-  - {fileID: 1506913536}
-  - {fileID: 1877401889}
-  - {fileID: 437012461}
-<<<<<<< HEAD:Assets/Scenes/SampleScene.unity
-=======
-  - {fileID: 1408330517}
   - {fileID: 549589637}
   - {fileID: 978945105}
->>>>>>> da55371968511c85f8e938553691c5bcbe8ef45a:Assets/Scenes/GameScene.unity
+  - {fileID: 437012461}
+  - {fileID: 242381087}
+  - {fileID: 246733911}
+  - {fileID: 705507995}
+  - {fileID: 706297049}
+  - {fileID: 1069872948}
+  - {fileID: 1506913536}
+  - {fileID: 1877401889}
