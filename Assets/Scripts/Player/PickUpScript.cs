@@ -52,6 +52,7 @@ public class PickUpScript : MonoBehaviour
                     InventorySystem.Instance.AddToInventory(pickUpScript.GetItemName());
                     Debug.Log("Adding item to inventory: " + pickUpScript.GetItemName());
                     hit.collider.gameObject.SetActive(false);
+                    InventorySystem.Instance.itemsPickedup.Add(gameObject.name);
                     Destroy(hit.collider.gameObject); // Destroys the *specific* object hit by the ray
                 }
             }

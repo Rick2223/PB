@@ -51,8 +51,16 @@ public class SaveManager : MonoBehaviour
     {
         AllGameData data = new AllGameData();
         data.playerData = GetPlayerData();
+        data.environmentData = GetEnvironmentData();
 
         SavingTypeSwitch(data, slotNumber);
+    }
+
+    private EnvironmentData GetEnvironmentData()
+    {
+        List<string> itemsPickedup = InventorySystem.Instance.itemsPickedup;
+
+        return new EnvironmentData(itemsPickedup);
     }
 
     private PlayerData GetPlayerData()
@@ -65,8 +73,30 @@ public class SaveManager : MonoBehaviour
         playerPosAndRot[4] = PlayerState.Instance.playerBody.transform.rotation.y;
         playerPosAndRot[5] = PlayerState.Instance.playerBody.transform.rotation.z;
 
-        return new PlayerData(playerPosAndRot);
+        string[] inventory = InventorySystem.Instance.itemList.ToArray();
+
+        string[] quickSlots = GetQuickSlotsContent();
+
+        return new PlayerData(playerPosAndRot, inventory, quickSlots);
     }
+
+    private string[] GetQuickSlotsContent()
+    {
+        List<string> temp = new List<string>();
+
+        foreach (GameObject slot in EquipSystem.Instance.quickSlotsList)
+        {
+            if (slot.transform.childCount != 0)
+            {
+                string name = slot.transform.GetChild(0).name;
+                string str2 = "(Clone)";
+                string cleanName = name.Replace(str2, "");
+                temp.Add(cleanName);
+            }
+        }
+        return temp.ToArray();
+    }
+
     public void SavingTypeSwitch(AllGameData gameData, int slotNumber)
     {
         if (isSavingToJson)
@@ -100,6 +130,22 @@ public class SaveManager : MonoBehaviour
     {
         // Player Data
         SetPlayerData(LoadingTypeSwitch(slotNumber).playerData);
+
+        // Environment Data
+        SetEnvironmentData(LoadingTypeSwitch(slotNumber).environmentData);
+    }
+
+    private void SetEnvironmentData(EnvironmentData environmentData)
+    {
+        foreach (Transform item in EnvironmentManager.Instance.allItems.transform)
+        {
+            if (environmentData.pickedupItems.Contains(item.name))
+            {
+                Destroy(item.gameObject);
+            }
+        }
+
+        InventorySystem.Instance.itemsPickedup = environmentData.pickedupItems;
     }
 
     private void SetPlayerData(PlayerData playerData)
@@ -120,6 +166,22 @@ public class SaveManager : MonoBehaviour
         loadedRotation.z = playerData.playerPositionAndRotation[5];
 
         PlayerState.Instance.playerBody.transform.rotation = Quaternion.Euler(loadedRotation);
+
+        //Setting Inventory Content
+        foreach (string item in playerData.inventoryContent)
+        {
+            InventorySystem.Instance.AddToInventory(item);
+        }
+
+        //Setting Quickslot Content
+        foreach (string item in playerData.quickSlotsContent)
+        {
+            GameObject availableSlot = EquipSystem.Instance.FindNextEmptySlot();
+
+            var itemToAdd = Instantiate(Resources.Load<GameObject>(item));
+
+            itemToAdd.transform.SetParent(availableSlot.transform, false);
+        }
 
     }
 
@@ -183,11 +245,11 @@ public class SaveManager : MonoBehaviour
     {
         string json = JsonUtility.ToJson(gameData);
 
-        string encrypted = EncryptionDecryption(json);
+        //string encrypted = EncryptionDecryption(json);
 
         using (StreamWriter writer = new StreamWriter(jsonPathProject + fileName + slotNumber + ".json"))
         {
-            writer.Write(encrypted);
+            writer.Write(json);
             print("Data saved to Json file at :" + jsonPathProject + fileName + slotNumber + ".json");
         };
     }
@@ -198,9 +260,9 @@ public class SaveManager : MonoBehaviour
         {
             string json = reader.ReadToEnd();
 
-            string decrypted = EncryptionDecryption(json);
+            //string decrypted = EncryptionDecryption(json);
 
-            AllGameData data = JsonUtility.FromJson<AllGameData>(decrypted);
+            AllGameData data = JsonUtility.FromJson<AllGameData>(json);
             print("Data loaded from Json file at :" + jsonPathProject + fileName + slotNumber + ".json");
             return data;
         }

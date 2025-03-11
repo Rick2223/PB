@@ -6,7 +6,5 @@ using UnityEngine;
 public class AllGameData
 {
     public PlayerData playerData;
-    //public VolumeSettings volumeSettings;
-    //public GraphicsSettings graphicsSettings;
-    //public KeyBindings keyBindings;
+    public EnvironmentData environmentData;
 }

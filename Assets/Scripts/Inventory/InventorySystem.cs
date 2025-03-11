@@ -23,6 +23,9 @@ public class InventorySystem : MonoBehaviour
 
     private GameObject equippedItem; // The currently equipped item
 
+    public List<string> itemsPickedup;
+    
+
     private void Awake()
     {
         if (Instance != null && Instance != this)

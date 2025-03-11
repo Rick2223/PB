@@ -7,10 +7,13 @@ using UnityEngine;
 public class PlayerData
 {
     public float[] playerPositionAndRotation;
-    //public string[] inventoryContent;
+    public string[] inventoryContent;
+    public string[] quickSlotsContent;
 
-    public PlayerData(float[] _playerPosAndRot)
+    public PlayerData(float[] _playerPosAndRot, string[] _inventoryContent, string[] _quickSlotsContent)
     {
         playerPositionAndRotation = _playerPosAndRot;
+        inventoryContent = _inventoryContent;
+        quickSlotsContent = _quickSlotsContent;
     }
 }
