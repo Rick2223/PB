@@ -29,6 +29,7 @@ public class SaveSlot : MonoBehaviour
     {
         button.onClick.AddListener(() =>
         {
+            Debug.Log(SaveManager.Instance);
             if (SaveManager.Instance.IsSlotEmpty(slotNumber))
             {
                 SaveGameConfirmed();
@@ -43,6 +44,7 @@ public class SaveSlot : MonoBehaviour
 
     private void Update()
     {
+        
         if (SaveManager.Instance.IsSlotEmpty(slotNumber))
         {
             buttonText.text = "Empty";

@@ -90,7 +90,9 @@ public class SaveManager : MonoBehaviour
             {
                 string name = slot.transform.GetChild(0).name;
                 string str2 = "(Clone)";
+                Debug.Log(name);
                 string cleanName = name.Replace(str2, "");
+                Debug.Log(cleanName);
                 temp.Add(cleanName);
             }
         }
@@ -170,6 +172,7 @@ public class SaveManager : MonoBehaviour
         //Setting Inventory Content
         foreach (string item in playerData.inventoryContent)
         {
+            Debug.Log(item);
             InventorySystem.Instance.AddToInventory(item);
         }
 
@@ -177,9 +180,17 @@ public class SaveManager : MonoBehaviour
         foreach (string item in playerData.quickSlotsContent)
         {
             GameObject availableSlot = EquipSystem.Instance.FindNextEmptySlot();
+            Debug.Log(Resources.Load<GameObject>(item).name);
 
             var itemToAdd = Instantiate(Resources.Load<GameObject>(item));
+            string str2 = "(Clone)";
+            Debug.Log(name);
+            itemToAdd.name = itemToAdd.name.Replace(str2, "");
+            Debug.Log(itemToAdd.name);
+            
+            
 
+            Debug.Log(itemToAdd.name);
             itemToAdd.transform.SetParent(availableSlot.transform, false);
         }
 
