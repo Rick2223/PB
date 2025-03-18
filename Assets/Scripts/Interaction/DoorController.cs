@@ -5,17 +5,21 @@ using UnityEngine;
 public class DoorController : MonoBehaviour
 {
     private Animator animator;
-    private bool isOpen = false;
+    public bool isOpen = false;
+    public int doorID = -1;
 
     [Header("Door Settings")]
     [SerializeField] private bool requiresKey = false; // Does this door need a key?
-    [SerializeField] private bool requiresCode = false; 
+    [SerializeField] public bool requiresCode = false; 
     [SerializeField] private string requiredKeyName = "CellKey"; // Key name
 
     [Header("Animation Settings")]
     [SerializeField] private string openAnimationName = "OpenDoor"; // Animation for opening
     [SerializeField] private string closeAnimationName = "CloseDoor"; // Animation for closing
+    public static DoorController Instance { get; set; }
 
+    
+    
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -52,5 +56,11 @@ public class DoorController : MonoBehaviour
             animator.Play(openAnimationName);
         }
         isOpen = !isOpen;
+    }
+
+    public void ForceOpen()
+    {
+        animator.Play(openAnimationName);
+        isOpen = true;
     }
 }

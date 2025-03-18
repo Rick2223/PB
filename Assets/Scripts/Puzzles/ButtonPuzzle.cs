@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.Events;
 
 public class ButtonPuzzle3D : MonoBehaviour
 {
@@ -7,6 +8,10 @@ public class ButtonPuzzle3D : MonoBehaviour
     public Animator gateRight;
     public TMP_Text wrongorright;
     private int currentStep = 0;
+
+    [SerializeField] private UnityEvent onAccessGranted;
+
+    public UnityEvent OnAccessGranted => onAccessGranted;
 
     // Define the correct sequence (0 = Red, 1 = Blue, 2 = Green)
     private int[] correctSequence = { 1, 0, 2, 3, 5 };
@@ -37,10 +42,9 @@ public class ButtonPuzzle3D : MonoBehaviour
 
     private void OpenGate()
     {
-        gateLeft.SetTrigger("Open");
-        gateRight.SetTrigger("Open");
         Debug.Log("Gate opened!");
         ShowFeedback("Correct sequence! Gate opened!", Color.green);
+        onAccessGranted?.Invoke();
         
     }
 

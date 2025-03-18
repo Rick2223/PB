@@ -7,9 +7,13 @@ using UnityEngine;
 public class EnvironmentData
 {
     public List<string> pickedupItems;
+    public List<int> openedDoors;
 
-    public EnvironmentData(List<string> _pickedupItems)
+    public EnvironmentData(List<string> _pickedupItems, List<int> _openedDoors)
     {
         pickedupItems = _pickedupItems;
+        openedDoors = _openedDoors;
+        
     }
+    
 }

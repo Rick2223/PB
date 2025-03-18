@@ -59,8 +59,17 @@ public class SaveManager : MonoBehaviour
     private EnvironmentData GetEnvironmentData()
     {
         List<string> itemsPickedup = InventorySystem.Instance.itemsPickedup;
+        List<int> openedDoors = new List<int>();
 
-        return new EnvironmentData(itemsPickedup);
+        foreach (DoorController door in FindObjectsOfType<DoorController>())
+        {
+            if (door.isOpen)
+            {
+                openedDoors.Add(door.doorID);
+            }
+        }
+
+        return new EnvironmentData(itemsPickedup, openedDoors);
     }
 
     private PlayerData GetPlayerData()
@@ -148,6 +157,15 @@ public class SaveManager : MonoBehaviour
         }
 
         InventorySystem.Instance.itemsPickedup = environmentData.pickedupItems;
+
+        foreach (DoorController door in FindObjectsOfType<DoorController>())
+        {
+            if (environmentData.openedDoors.Contains(door.doorID))
+            {
+                Debug.Log("Door ID: " + door.doorID + " is open");
+                door.ForceOpen();
+            }
+        }
     }
 
     private void SetPlayerData(PlayerData playerData)

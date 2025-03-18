@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using TMPro;
 
 public class CuttingBoard : MonoBehaviour
@@ -16,6 +17,11 @@ public class CuttingBoard : MonoBehaviour
 
     [Header("UI Feedback")]
     public TMP_Text feedbackText; // Assign your TMP text element here
+
+    [SerializeField] private UnityEvent onAccessGranted;
+
+    public UnityEvent OnAccessGranted => onAccessGranted;
+    
 
     private void OnMouseDown()
     {
@@ -62,7 +68,8 @@ public class CuttingBoard : MonoBehaviour
         if (door != null)
         {
             ShowFeedback("All ingredients placed! Door unlocked.");
-            door.SetActive(false); // Adjust this to trigger an animation instead if needed
+            //door.SetActive(false); // Adjust this to trigger an animation instead if needed
+            onAccessGranted?.Invoke();
         }
     }
 
