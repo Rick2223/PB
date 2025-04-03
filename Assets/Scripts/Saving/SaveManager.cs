@@ -274,25 +274,25 @@ public class SaveManager : MonoBehaviour
     {
         string json = JsonUtility.ToJson(gameData);
 
-        //string encrypted = EncryptionDecryption(json);
+        string encrypted = EncryptionDecryption(json);
 
-        using (StreamWriter writer = new StreamWriter(jsonPathProject + fileName + slotNumber + ".json"))
+        using (StreamWriter writer = new StreamWriter(jsonPathPersistent + fileName + slotNumber + ".json"))
         {
             writer.Write(json);
-            print("Data saved to Json file at :" + jsonPathProject + fileName + slotNumber + ".json");
+            print("Data saved to Json file at :" + jsonPathPersistent + fileName + slotNumber + ".json");
         };
     }
 
     public AllGameData LoadGameDataFromJsonFile(int slotNumber)
     {
-       using (StreamReader reader = new StreamReader(jsonPathProject + fileName + slotNumber + ".json"))
+       using (StreamReader reader = new StreamReader(jsonPathPersistent + fileName + slotNumber + ".json"))
         {
             string json = reader.ReadToEnd();
 
-            //string decrypted = EncryptionDecryption(json);
+            string decrypted = EncryptionDecryption(json);
 
             AllGameData data = JsonUtility.FromJson<AllGameData>(json);
-            print("Data loaded from Json file at :" + jsonPathProject + fileName + slotNumber + ".json");
+            print("Data loaded from Json file at :" + jsonPathPersistent + fileName + slotNumber + ".json");
             return data;
         }
     }
@@ -359,7 +359,7 @@ public class SaveManager : MonoBehaviour
     {
         if (isSavingToJson)
         {
-            if (System.IO.File.Exists(jsonPathProject + fileName + slotNumber + ".json"))
+            if (System.IO.File.Exists(jsonPathPersistent + fileName + slotNumber + ".json"))
             {
                 return true;
             }

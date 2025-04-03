@@ -39,7 +39,7 @@ public class MenuManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
-        else if(Input.GetKeyDown(KeyCode.M) && isMenuOpen)
+        else if(Input.GetKeyDown(KeyCode.Escape) && isMenuOpen)
         {
             saveMenu.SetActive(false);
             settingsMenu.SetActive(false);
