@@ -29,7 +29,7 @@ public class MenuManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M) && !isMenuOpen) //set M to Escape
+        if (Input.GetKeyDown(KeyCode.Escape) && !isMenuOpen) //set Escape to another key if running in the engine
         {
             uiCanvas.SetActive(false);
             menuCanvas.SetActive(true);
