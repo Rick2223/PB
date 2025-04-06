@@ -12,6 +12,8 @@ public class PickUpScript : MonoBehaviour
     private int LayerNumber; //layer index
     public string ItemName;
 
+    
+
     public string GetItemName()
     {
         return ItemName;
@@ -28,6 +30,7 @@ public class PickUpScript : MonoBehaviour
         {
             ItemName = gameObject.name;
             Debug.Log("ItemName was empty, setting it to " + ItemName);
+
         }
 
         //mouseLookScript = player.GetComponent<MouseLookScript>();
@@ -54,6 +57,7 @@ public class PickUpScript : MonoBehaviour
                     hit.collider.gameObject.SetActive(false);
                     InventorySystem.Instance.itemsPickedup.Add(gameObject.name);
                     Destroy(hit.collider.gameObject); // Destroys the *specific* object hit by the ray
+                    
                 }
             }
         }

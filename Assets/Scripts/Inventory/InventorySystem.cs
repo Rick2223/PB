@@ -24,7 +24,11 @@ public class InventorySystem : MonoBehaviour
     private GameObject equippedItem; // The currently equipped item
 
     public List<string> itemsPickedup;
-    
+
+    [SerializeField] private AudioClip pickupsound; //sound played when picking up the object
+
+    private AudioSource audioSource; //audio source to play the sound
+
 
     private void Awake()
     {
@@ -44,6 +48,7 @@ public class InventorySystem : MonoBehaviour
         isFull = false;
         PopulateSlotList();
         Cursor.visible = false;
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void PopulateSlotList()
@@ -86,6 +91,9 @@ public class InventorySystem : MonoBehaviour
         itemList.Add(itemToAdd.name);
 
         Debug.Log(itemToAdd);
+
+        audioSource.clip = pickupsound; //sets the audio clip to the one we set in the inspector
+        audioSource.Play(); //plays the sound
     }
 
     private GameObject FindNextEmptySlot()
