@@ -9,7 +9,15 @@ public class EscapeCar : MonoBehaviour
 
     public Transform player;
 
+    [SerializeField] private AudioClip carstartsound; //sound played when picking up the object
+    private AudioSource audioSource; //audio source to play the sound
 
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+    
     private void OnMouseDown()
     {
         if (IsPlayerCloseEnough())
@@ -20,6 +28,8 @@ public class EscapeCar : MonoBehaviour
             }
             else
             {
+                audioSource.clip = carstartsound; //sets the audio clip to the one we set in the inspector
+                audioSource.Play(); //plays the sound
                 LoadScene();
             }
         }
