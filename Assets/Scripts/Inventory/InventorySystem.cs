@@ -26,6 +26,7 @@ public class InventorySystem : MonoBehaviour
     public List<string> itemsPickedup;
 
     [SerializeField] private AudioClip pickupsound; //sound played when picking up the object
+    [SerializeField] private AudioClip invopensound; //sound played when picking up the object
 
     private AudioSource audioSource; //audio source to play the sound
 
@@ -70,6 +71,8 @@ public class InventorySystem : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             isOpen = true;
+            audioSource.clip = invopensound; //sets the audio clip to the one we set in the inspector
+            audioSource.Play(); //plays the sound
         }
         else if (Input.GetKeyDown(KeyCode.I) && isOpen)
         {
@@ -77,6 +80,8 @@ public class InventorySystem : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             isOpen = false;
+            audioSource.clip = invopensound; //sets the audio clip to the one we set in the inspector
+            audioSource.Play(); //plays the sound
         }
     }
 

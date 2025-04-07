@@ -21,8 +21,16 @@ public class CuttingBoard : MonoBehaviour
     [SerializeField] private UnityEvent onAccessGranted;
 
     public UnityEvent OnAccessGranted => onAccessGranted;
+
+    [SerializeField] private AudioClip addsound; //sound played when picking up the object
+
+    private AudioSource audioSource; //audio source to play the sound
     
 
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
     private void OnMouseDown()
     {
         GameObject equippedItem = EquipSystem.Instance.selectedItem;
@@ -48,6 +56,9 @@ public class CuttingBoard : MonoBehaviour
 
             // Check if all ingredients are placed
             CheckCompletion();
+
+            audioSource.clip = addsound; //sets the audio clip to the one we set in the inspector
+            audioSource.Play(); //plays the sound
         }
         else
         {

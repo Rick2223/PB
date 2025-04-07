@@ -16,6 +16,10 @@ public class DoorController : MonoBehaviour
     [Header("Animation Settings")]
     [SerializeField] private string openAnimationName = "OpenDoor"; // Animation for opening
     [SerializeField] private string closeAnimationName = "CloseDoor"; // Animation for closing
+
+    [SerializeField] private AudioClip doorsound; //sound played when picking up the object
+
+    private AudioSource audioSource; //audio source to play the sound
     public static DoorController Instance { get; set; }
 
     
@@ -27,6 +31,7 @@ public class DoorController : MonoBehaviour
         {
             Debug.LogError("No Animator component found on " + gameObject.name);
         }
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void SetCodeFalse()
@@ -50,10 +55,14 @@ public class DoorController : MonoBehaviour
         if (isOpen)
         {
             animator.Play(closeAnimationName);
+            audioSource.clip = doorsound; //sets the audio clip to the one we set in the inspector
+            audioSource.Play(); //plays the sound
         }
         else
         {
             animator.Play(openAnimationName);
+            audioSource.clip = doorsound; //sets the audio clip to the one we set in the inspector
+            audioSource.Play(); //plays the sound
         }
         isOpen = !isOpen;
     }
