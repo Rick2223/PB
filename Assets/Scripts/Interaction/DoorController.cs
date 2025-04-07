@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using TMPro;
 
 public class DoorController : MonoBehaviour
 {
@@ -17,9 +19,8 @@ public class DoorController : MonoBehaviour
     [SerializeField] private string openAnimationName = "OpenDoor"; // Animation for opening
     [SerializeField] private string closeAnimationName = "CloseDoor"; // Animation for closing
 
-    [SerializeField] private AudioClip doorsound; //sound played when picking up the object
 
-    private AudioSource audioSource; //audio source to play the sound
+    public TMP_Text feedbackText; // Assign your TMP text element here
     public static DoorController Instance { get; set; }
 
     
@@ -31,7 +32,6 @@ public class DoorController : MonoBehaviour
         {
             Debug.LogError("No Animator component found on " + gameObject.name);
         }
-        audioSource = GetComponent<AudioSource>();
     }
 
     public void SetCodeFalse()
@@ -44,25 +44,25 @@ public class DoorController : MonoBehaviour
         if (requiresKey && EquipSystem.Instance.selectedItem.name != requiredKeyName)
         {
             Debug.Log(gameObject.name + " is locked. You need the " + requiredKeyName + ".");
+            ShowFeedback("This is locked. You need a " + requiredKeyName + "to open");
             return;
         }
         else if (requiresCode)
         {
             Debug.Log(gameObject.name + " is locked. You need a code.");
+            ShowFeedback("This door is locked. You need a code.");
             return;
         }
 
         if (isOpen)
         {
             animator.Play(closeAnimationName);
-            audioSource.clip = doorsound; //sets the audio clip to the one we set in the inspector
-            audioSource.Play(); //plays the sound
+            AudioManager.Instance.PlayEffect("GateOpen");
         }
         else
         {
             animator.Play(openAnimationName);
-            audioSource.clip = doorsound; //sets the audio clip to the one we set in the inspector
-            audioSource.Play(); //plays the sound
+            AudioManager.Instance.PlayEffect("GateOpen");
         }
         isOpen = !isOpen;
     }
@@ -71,5 +71,25 @@ public class DoorController : MonoBehaviour
     {
         animator.Play(openAnimationName);
         isOpen = true;
+    }
+
+    private void ShowFeedback(string message)
+    {
+        if (feedbackText != null)
+        {
+            feedbackText.text = message;
+            feedbackText.ForceMeshUpdate(); // Ensure TMP updates immediately
+
+            CancelInvoke(nameof(ClearFeedback));
+            Invoke(nameof(ClearFeedback), 2f); // Clear after 2 seconds
+        }
+    }
+
+    private void ClearFeedback()
+    {
+        if (feedbackText != null)
+        {
+            feedbackText.text = "";
+        }
     }
 }

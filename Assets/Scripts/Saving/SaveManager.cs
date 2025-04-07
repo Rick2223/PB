@@ -309,16 +309,16 @@ public class SaveManager : MonoBehaviour
     {
         public float music;
         public float effects;
-        public float master;
+        
     }
 
-    public void SaveVolumeSettings(float _music, float _effects, float _master)
+    public void SaveVolumeSettings(float _music, float _effects)
     {
         VolumeSettings volumeSettings = new VolumeSettings()
         {
             music = _music,
             effects = _effects,
-            master = _master
+            
         };
 
         PlayerPrefs.SetString("Volume", JsonUtility.ToJson(volumeSettings));

@@ -11,8 +11,7 @@ public class SettingsManager : MonoBehaviour
 
     public Button BackButton;
 
-    public Slider masterSlider;
-    public GameObject masterValue;
+    
 
     public Slider musicSlider;
     public GameObject musicValue;
@@ -24,7 +23,7 @@ public class SettingsManager : MonoBehaviour
     {
         BackButton.onClick.AddListener(()=>
         {
-            SaveManager.Instance.SaveVolumeSettings(musicSlider.value, effectsSlider.value, masterSlider.value);
+            SaveManager.Instance.SaveVolumeSettings(musicSlider.value, effectsSlider.value);
 
             print("Save to Player Pref");
         });
@@ -46,7 +45,7 @@ public class SettingsManager : MonoBehaviour
     {
         VolumeSettings volumeSettings = SaveManager.Instance.LoadVolumeSettings();
 
-        masterSlider.value = volumeSettings.master;
+        
         musicSlider.value = volumeSettings.music;
         effectsSlider.value = volumeSettings.effects;
 
@@ -68,7 +67,6 @@ public class SettingsManager : MonoBehaviour
 
     private void Update()
     {
-        masterValue.GetComponent<TextMeshProUGUI>().text = "" + (masterSlider.value) + "";
         musicValue.GetComponent<TextMeshProUGUI>().text = "" + (musicSlider.value) + "";
         effectsValue.GetComponent<TextMeshProUGUI>().text = "" + (effectsSlider.value) + "";
     }

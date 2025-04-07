@@ -31,31 +31,36 @@ public class MenuManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape) && !isMenuOpen) //set Escape to another key if running in the engine
         {
-            uiCanvas.SetActive(false);
-            menuCanvas.SetActive(true);
-
-            isMenuOpen = true;
-
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            OpenMenu();
         }
-        else if(Input.GetKeyDown(KeyCode.Escape) && isMenuOpen)
+        else if (Input.GetKeyDown(KeyCode.Escape) && isMenuOpen)
         {
-            saveMenu.SetActive(false);
-            settingsMenu.SetActive(false);
-            menu.SetActive(true);
-
-            uiCanvas.SetActive(true);
-            menuCanvas.SetActive(false);
-
-            isMenuOpen = false;
-
-            if(InventorySystem.Instance.isOpen == false)
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-            }
-            
+            CloseMenu();
         }
     }
+
+    public void OpenMenu()
+    {
+        uiCanvas.SetActive(false);
+        menuCanvas.SetActive(true);
+        isMenuOpen = true;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public void CloseMenu()
+    {
+        saveMenu.SetActive(false);
+        settingsMenu.SetActive(false);
+        menu.SetActive(true);
+        uiCanvas.SetActive(true);
+        menuCanvas.SetActive(false);
+        isMenuOpen = false;
+        if (InventorySystem.Instance.isOpen == false)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+    }
+
 }

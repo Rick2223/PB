@@ -25,10 +25,7 @@ public class InventorySystem : MonoBehaviour
 
     public List<string> itemsPickedup;
 
-    [SerializeField] private AudioClip pickupsound; //sound played when picking up the object
-    [SerializeField] private AudioClip invopensound; //sound played when picking up the object
-
-    private AudioSource audioSource; //audio source to play the sound
+    public GameObject HelpUI;
 
 
     private void Awake()
@@ -49,7 +46,6 @@ public class InventorySystem : MonoBehaviour
         isFull = false;
         PopulateSlotList();
         Cursor.visible = false;
-        audioSource = GetComponent<AudioSource>();
     }
 
     private void PopulateSlotList()
@@ -71,8 +67,8 @@ public class InventorySystem : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             isOpen = true;
-            audioSource.clip = invopensound; //sets the audio clip to the one we set in the inspector
-            audioSource.Play(); //plays the sound
+            HelpUI.SetActive(false);
+            AudioManager.Instance.PlayEffect("InventoryOpen");
         }
         else if (Input.GetKeyDown(KeyCode.I) && isOpen)
         {
@@ -80,8 +76,8 @@ public class InventorySystem : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             isOpen = false;
-            audioSource.clip = invopensound; //sets the audio clip to the one we set in the inspector
-            audioSource.Play(); //plays the sound
+            HelpUI.SetActive(true);
+            AudioManager.Instance.PlayEffect("InventoryOpen");
         }
     }
 
@@ -96,9 +92,8 @@ public class InventorySystem : MonoBehaviour
         itemList.Add(itemToAdd.name);
 
         Debug.Log(itemToAdd);
+        AudioManager.Instance.PlayEffect("PickUpSound");
 
-        audioSource.clip = pickupsound; //sets the audio clip to the one we set in the inspector
-        audioSource.Play(); //plays the sound
     }
 
     private GameObject FindNextEmptySlot()

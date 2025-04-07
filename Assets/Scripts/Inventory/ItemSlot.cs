@@ -21,8 +21,9 @@ public class ItemSlot : MonoBehaviour, IDropHandler
     public void OnDrop(PointerEventData eventData)
     {
         Debug.Log("OnDrop");
+        AudioManager.Instance.PlayEffect("MoveItem");
 
-        if(!Item)
+        if (!Item)
         {
             DragDrop.itemBeingDragged.transform.SetParent(transform);
             DragDrop.itemBeingDragged.transform.localPosition = new Vector2(0, 0);
